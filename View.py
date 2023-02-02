@@ -1,3 +1,4 @@
+import tkinter
 from tkinter import *
 import tkinter.font as tkfont
 
@@ -17,12 +18,16 @@ class View(Tk):
         self.geometry('515x200')
         self.title('Ülesannete määraja')
         self.center(self)
+        self.state('zoomed')
 
         # Create frames
-        self.frame_top, self.frame_center, self.frame_names, self.frame_tasks, self.frame_bottom = self.create_frames()
+        self.frame_top, self.frame_center, self.frame_bottom = self.create_frames()
 
         # Create buttons
         self.btn_names, self.btn_tasks, self.btn_shuffle, self.btn_save, self.btn_clear = self.create_all_buttons()
+
+        # Create textboxes
+        self.box_names, self.box_tasks = self.create_textboxes()
 
     def main(self):
         self.mainloop()
@@ -49,17 +54,27 @@ class View(Tk):
     def create_frames(self):
         frame_top = Frame(self, bg='blue', height=50)
         frame_center = Frame(self, bg='black')
-        frame_names = Frame(self, bg='green').grid(column=0, row=0)
-        frame_tasks = Frame(self, bg='yellow').grid(column=1, row=0)
         frame_bottom = Frame(self, bg='white')
 
         frame_top.pack(fill=BOTH)
         frame_center.pack(expand=True, fill=BOTH)
-        frame_names.pack(expand=True, fill=BOTH)
-        frame_tasks.pack(expand=True, fill=BOTH)
         frame_bottom.pack(expand=True, fill=BOTH)
 
-        return frame_top, frame_center, frame_names, frame_tasks, frame_bottom
+        return frame_top, frame_center, frame_bottom
+
+    def create_textboxes(self):
+        box_names = Text(self.frame_center, bg='white', yscrollcommand=str)
+        box_tasks = Text(self.frame_center, bg='white')
+
+        # Create scrollbar
+        #scroll_bar = tkinter.Scrollbar(box_names)
+        #scroll_bar.pack(side=tkinter.RIGHT)
+
+        box_names.pack(side=LEFT, padx=5, pady=5)
+        box_tasks.pack(side=LEFT, padx=5, pady=5)
+
+
+        return box_names, box_tasks
 
     def create_all_buttons(self):
         btn_names = Button(self.frame_top, text='Nimed', font=self.default_style, command=self.controller.click_names)
