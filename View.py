@@ -27,7 +27,10 @@ class View(Tk):
         self.btn_names, self.btn_tasks, self.btn_shuffle, self.btn_save, self.btn_clear = self.create_all_buttons()
 
         # Create textboxes
-        self.box_names, self.box_tasks = self.create_textboxes()
+        self.box_names, self.box_tasks, self.box_result = self.create_textboxes()
+
+        # Create labels
+        #self.label_names, self.label_tasks, self.label_result = self.create_labels()
 
     def main(self):
         self.mainloop()
@@ -63,8 +66,9 @@ class View(Tk):
         return frame_top, frame_center, frame_bottom
 
     def create_textboxes(self):
-        box_names = Text(self.frame_center, bg='white', yscrollcommand=str)
-        box_tasks = Text(self.frame_center, bg='white')
+        box_names = Text(self.frame_center, bg='white', height=100, width=30)
+        box_tasks = Text(self.frame_center, bg='white', height=100, width=30)
+        box_result = Text(self.frame_center, bg='white', height=100, width=30)
 
         # Create scrollbar
         #scroll_bar = tkinter.Scrollbar(box_names)
@@ -72,17 +76,28 @@ class View(Tk):
 
         box_names.pack(side=LEFT, padx=5, pady=5)
         box_tasks.pack(side=LEFT, padx=5, pady=5)
+        box_result.pack(side=LEFT, padx=5, pady=5)
 
+        return box_names, box_tasks, box_result
 
-        return box_names, box_tasks
+    '''def create_labels(self):
+        label_names = Label(self.box_names, text='Nimed')
+        label_tasks = Label(self.box_tasks, text='Ülesanded')
+        label_result = Label(self.box_result, text='Tulemus')
+
+        label_names.pack(side=TOP, anchor=NW, pady=10)
+        label_tasks.pack(side=TOP, anchor=NW, pady=10)
+        label_result.pack(side=TOP, anchor=NW, pady=10)
+
+        return label_names, label_tasks, label_result'''
 
     def create_all_buttons(self):
-        btn_names = Button(self.frame_top, text='Nimed', font=self.default_style, command=self.controller.click_names)
-        btn_tasks = Button(self.frame_top, text='Ülesanded', font=self.default_style,
+        btn_names = Button(self.frame_top, text='Nimed...', font=self.default_style, command=self.controller.click_names)
+        btn_tasks = Button(self.frame_top, text='Ülesanded...', font=self.default_style,
                            command=self.controller.click_tasks)
         btn_shuffle = Button(self.frame_top, text='Sega', font=self.default_style,
                              command=self.controller.click_shuffle)
-        btn_save = Button(self.frame_top, text='Salvesta', font=self.default_style, command=self.controller.click_save)
+        btn_save = Button(self.frame_top, text='Salvesta...', font=self.default_style, command=self.controller.click_save)
         btn_clear = Button(self.frame_top, text='Tühjenda', font=self.default_style,
                            command=self.controller.click_clear)
 
