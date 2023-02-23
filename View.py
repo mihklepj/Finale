@@ -1,4 +1,3 @@
-import tkinter
 from tkinter import *
 import tkinter.font as tkfont
 
@@ -15,22 +14,19 @@ class View(Tk):
         self.default_style_bold = tkfont.Font(family='Verdana', size=10, weight='bold')
         self.default_style = tkfont.Font(family='Verdana', size=10)
 
-        self.geometry('515x200')
+        # GUI window
+        self.geometry('1000x500')
         self.title('Ülesannete määraja')
         self.center(self)
-        self.state('zoomed')
 
         # Create frames
         self.frame_top, self.frame_center, self.frame_bottom = self.create_frames()
 
         # Create buttons
-        self.btn_names, self.btn_tasks, self.btn_shuffle, self.btn_save, self.btn_clear = self.create_all_buttons()
+        self.btn_names, self.btn_tasks, self.btn_shuffle, self.btn_save, self.btn_close = self.create_all_buttons()
 
         # Create textboxes
         self.box_names, self.box_tasks, self.box_result = self.create_textboxes()
-
-        # Create labels
-        #self.label_names, self.label_tasks, self.label_result = self.create_labels()
 
     def main(self):
         self.mainloop()
@@ -66,13 +62,9 @@ class View(Tk):
         return frame_top, frame_center, frame_bottom
 
     def create_textboxes(self):
-        box_names = Text(self.frame_center, bg='white', height=100, width=30)
-        box_tasks = Text(self.frame_center, bg='white', height=100, width=30)
-        box_result = Text(self.frame_center, bg='white', height=100, width=30)
-
-        # Create scrollbar
-        #scroll_bar = tkinter.Scrollbar(box_names)
-        #scroll_bar.pack(side=tkinter.RIGHT)
+        box_names = Text(self.frame_center, bg='white', height=100, width=20, font=self.default_style)
+        box_tasks = Text(self.frame_center, bg='white', height=100, width=40, font=self.default_style)
+        box_result = Text(self.frame_center, bg='white', height=100, width=60, font=self.default_style)
 
         box_names.pack(side=LEFT, padx=5, pady=5)
         box_tasks.pack(side=LEFT, padx=5, pady=5)
@@ -80,33 +72,23 @@ class View(Tk):
 
         return box_names, box_tasks, box_result
 
-    '''def create_labels(self):
-        label_names = Label(self.box_names, text='Nimed')
-        label_tasks = Label(self.box_tasks, text='Ülesanded')
-        label_result = Label(self.box_result, text='Tulemus')
-
-        label_names.pack(side=TOP, anchor=NW, pady=10)
-        label_tasks.pack(side=TOP, anchor=NW, pady=10)
-        label_result.pack(side=TOP, anchor=NW, pady=10)
-
-        return label_names, label_tasks, label_result'''
-
     def create_all_buttons(self):
-        btn_names = Button(self.frame_top, text='Nimed...', font=self.default_style, command=self.controller.click_names)
-        btn_tasks = Button(self.frame_top, text='Ülesanded...', font=self.default_style,
-                           command=self.controller.click_tasks)
-        btn_shuffle = Button(self.frame_top, text='Sega', font=self.default_style,
-                             command=self.controller.click_shuffle)
-        btn_save = Button(self.frame_top, text='Salvesta...', font=self.default_style, command=self.controller.click_save)
-        btn_clear = Button(self.frame_top, text='Tühjenda', font=self.default_style,
-                           command=self.controller.click_clear)
+        btn_names = Button(self.frame_top, text='Nimed...', font=self.default_style_bold,
+                           command=self.controller.click_names, width=18)
+        btn_tasks = Button(self.frame_top, text='Ülesanded...', font=self.default_style_bold,
+                           command=self.controller.click_tasks, width=35)
+        btn_shuffle = Button(self.frame_top, text='Sega', font=self.default_style_bold,
+                             command=self.controller.click_shuffle, state='disabled')
+        btn_save = Button(self.frame_top, text='Salvesta...', font=self.default_style_bold,
+                          command=self.controller.click_save, state='disabled')
+        btn_close = Button(self.frame_top, text='Sulge', font=self.default_style_bold,
+                           command=self.destroy)
 
-        # Three buttons on frame
-        btn_names.grid(row=0, column=0, padx=5, pady=2, sticky=EW)
-        btn_tasks.grid(row=0, column=1, padx=5, pady=2, sticky=EW)
-        btn_shuffle.grid(row=0, column=2, padx=5, pady=2, sticky=EW)
-        btn_save.grid(row=0, column=3, padx=5, pady=2, sticky=EW)
-        btn_clear.grid(row=0, column=4, padx=5, pady=2, sticky=EW)
+        # Buttons on top frame
+        btn_names.grid(row=0, column=0, padx=2, pady=5, sticky=EW)
+        btn_tasks.grid(row=0, column=1, padx=2, pady=5, sticky=EW)
+        btn_shuffle.grid(row=0, column=2, padx=15, pady=5, sticky=EW)
+        btn_save.grid(row=0, column=3, padx=15, pady=5, sticky=EW)
+        btn_close.grid(row=0, column=4, padx=30, pady=5, sticky=EW)
 
-        return btn_names, btn_tasks, btn_shuffle, btn_save, btn_clear
-
+        return btn_names, btn_tasks, btn_shuffle, btn_save, btn_close
